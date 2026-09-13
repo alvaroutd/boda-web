@@ -35,9 +35,10 @@ export default function SubeFotos() {
   }
 
   return (
-    <section id="fotos" className="mx-auto max-w-2xl px-6 py-24 text-center">
-      <h2 className="mb-4 text-3xl font-serif">Sube tus fotos</h2>
-      <p className="mb-8 text-neutral-600">
+    <section id="fotos" className="mx-auto max-w-2xl px-6 py-24 pb-32 text-center">
+      <p className="mb-2 text-xs tracking-[0.35em] uppercase text-accent">Recuerdos</p>
+      <h2 className="mb-4 font-serif text-4xl font-medium">Sube tus fotos</h2>
+      <p className="mb-10 text-muted">
         ¿Tienes fotos o vídeos del día? Súbelos aquí directamente desde el móvil,
         sin instalar nada.
       </p>
@@ -56,16 +57,16 @@ export default function SubeFotos() {
         type="button"
         onClick={() => inputRef.current?.click()}
         disabled={estado === "subiendo"}
-        className="rounded-lg bg-neutral-900 px-8 py-3 text-white hover:bg-neutral-700 disabled:opacity-50"
+        className="rounded-full bg-accent px-10 py-3 text-sm tracking-wide text-background uppercase transition hover:opacity-90 disabled:opacity-50"
       >
         {estado === "subiendo" ? `Subiendo ${subidas}/${total}...` : "Elegir fotos o vídeos"}
       </button>
 
       {estado === "ok" && (
-        <p className="mt-4 text-green-700">¡Gracias! Se han subido correctamente.</p>
+        <p className="mt-4 text-accent">¡Gracias! Se han subido correctamente.</p>
       )}
       {estado === "error" && (
-        <p className="mt-4 text-red-600">
+        <p className="mt-4 text-red-700">
           Algo ha fallado subiendo alguna foto. Inténtalo de nuevo.
         </p>
       )}

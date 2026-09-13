@@ -23,24 +23,32 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
-      <p className="tracking-[0.3em] text-sm uppercase text-neutral-500">Nos casamos</p>
-      <h1 className="text-5xl sm:text-7xl font-serif">Álvaro &amp; Luisma</h1>
-      <p className="text-lg text-neutral-600">7 de diciembre de 2026 · El Tinto</p>
+    <section className="flex min-h-screen flex-col items-center justify-center gap-8 px-6 text-center">
+      <p className="text-xs tracking-[0.35em] uppercase text-accent">Nos casamos</p>
+
+      <h1 className="font-serif text-6xl sm:text-8xl font-medium text-foreground">
+        Álvaro <span className="text-accent">&amp;</span> Luisma
+      </h1>
+
+      <div className="flex items-center gap-3 text-muted">
+        <span className="h-px w-8 bg-line" />
+        <p className="text-sm tracking-wide">7 de diciembre de 2026 · El Tinto</p>
+        <span className="h-px w-8 bg-line" />
+      </div>
 
       {timeLeft && (
-        <div className="mt-8 flex gap-6 text-center">
+        <div className="mt-6 flex gap-8 text-center">
           <div>
-            <div className="text-3xl font-semibold">{timeLeft.days}</div>
-            <div className="text-xs uppercase text-neutral-500">días</div>
+            <div className="font-serif text-4xl text-accent">{timeLeft.days}</div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-muted">días</div>
           </div>
           <div>
-            <div className="text-3xl font-semibold">{timeLeft.hours}</div>
-            <div className="text-xs uppercase text-neutral-500">horas</div>
+            <div className="font-serif text-4xl text-accent">{timeLeft.hours}</div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-muted">horas</div>
           </div>
           <div>
-            <div className="text-3xl font-semibold">{timeLeft.minutes}</div>
-            <div className="text-xs uppercase text-neutral-500">min</div>
+            <div className="font-serif text-4xl text-accent">{timeLeft.minutes}</div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-muted">min</div>
           </div>
         </div>
       )}
