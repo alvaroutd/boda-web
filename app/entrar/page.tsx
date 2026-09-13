@@ -1,3 +1,5 @@
+import { NOMBRES } from "@/lib/content";
+
 export default async function EntrarPage({
   searchParams,
 }: {
@@ -8,7 +10,7 @@ export default async function EntrarPage({
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
       <h1 className="font-serif text-4xl font-medium">
-        Álvaro <span className="text-accent">&amp;</span> Luisma
+        {NOMBRES.novio1} <span className="text-accent">&amp;</span> {NOMBRES.novio2}
       </h1>
       <p className="text-muted">Introduce la contraseña que os hemos compartido.</p>
 

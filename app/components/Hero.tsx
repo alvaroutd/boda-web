@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { NOMBRES, FECHA_BODA_ISO, FECHA_TEXTO, LUGAR } from "@/lib/content";
 
-const WEDDING_DATE = new Date("2026-12-07T17:00:00+01:00");
+const WEDDING_DATE = new Date(FECHA_BODA_ISO);
 
 function getTimeLeft() {
   const diff = WEDDING_DATE.getTime() - Date.now();
@@ -27,12 +28,14 @@ export default function Hero() {
       <p className="text-xs tracking-[0.35em] uppercase text-accent">Nos casamos</p>
 
       <h1 className="font-serif text-6xl sm:text-8xl font-medium text-foreground">
-        Álvaro <span className="text-accent">&amp;</span> Luisma
+        {NOMBRES.novio1} <span className="text-accent">&amp;</span> {NOMBRES.novio2}
       </h1>
 
       <div className="flex items-center gap-3 text-muted">
         <span className="h-px w-8 bg-line" />
-        <p className="text-sm tracking-wide">7 de diciembre de 2026 · El Tinto</p>
+        <p className="text-sm tracking-wide">
+          {FECHA_TEXTO} · {LUGAR.nombre}
+        </p>
         <span className="h-px w-8 bg-line" />
       </div>
 

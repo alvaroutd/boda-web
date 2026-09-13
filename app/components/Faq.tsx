@@ -1,14 +1,4 @@
-const PREGUNTAS = [
-  {
-    pregunta: "¿Hay código de vestimenta?",
-    respuesta: "Libre — venid guapos y elegantes, cada uno a su estilo.",
-  },
-  {
-    pregunta: "¿Hay aparcamiento?",
-    respuesta:
-      "Sí, hay aparcamiento en la finca. Aún estamos decidiendo si organizamos un autobús — si hay novedades, os avisamos.",
-  },
-];
+import { FAQ } from "@/lib/content";
 
 export default function Faq() {
   return (
@@ -20,7 +10,7 @@ export default function Faq() {
         Información práctica
       </h2>
       <div className="divide-y divide-line border-y border-line">
-        {PREGUNTAS.map((item) => (
+        {FAQ.map((item) => (
           <div key={item.pregunta} className="py-5">
             <div className="font-serif text-xl">{item.pregunta}</div>
             <div className="mt-1 text-muted">{item.respuesta}</div>

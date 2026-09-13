@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import { NOMBRES, FECHA_TEXTO, LUGAR } from "@/lib/content";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,8 +20,8 @@ const display = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Álvaro & Luisma — 7 de diciembre de 2026",
-  description: "Nos casamos el 7 de diciembre de 2026 en El Tinto.",
+  title: `${NOMBRES.novio1} & ${NOMBRES.novio2} — ${FECHA_TEXTO}`,
+  description: `Nos casamos el ${FECHA_TEXTO} en ${LUGAR.nombre}.`,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
