@@ -1,12 +1,12 @@
-// TODO: revisar y completar las preguntas con Álvaro
 const PREGUNTAS = [
   {
     pregunta: "¿Hay código de vestimenta?",
-    respuesta: "Por confirmar.",
+    respuesta: "Libre — venid guapos y elegantes, cada uno a su estilo.",
   },
   {
     pregunta: "¿Hay aparcamiento?",
-    respuesta: "Por confirmar.",
+    respuesta:
+      "Sí, hay aparcamiento en la finca. Aún estamos decidiendo si organizamos un autobús — si hay novedades, os avisamos.",
   },
 ];
 
