@@ -32,6 +32,7 @@ export default function SubeFotos() {
 
     setEstado(huboError ? "error" : "ok");
     if (inputRef.current) inputRef.current.value = "";
+    if (!huboError) window.dispatchEvent(new Event("fotos-subidas"));
   }
 
   return (

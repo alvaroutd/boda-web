@@ -14,10 +14,15 @@ export default function Galeria() {
   const [abierta, setAbierta] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch("/api/fotos")
-      .then((res) => (res.ok ? res.json() : { fotos: [] }))
-      .then((data) => setFotos(data.fotos))
-      .catch(() => setFotos([]));
+    function cargar() {
+      fetch("/api/fotos")
+        .then((res) => (res.ok ? res.json() : { fotos: [] }))
+        .then((data) => setFotos(data.fotos))
+        .catch(() => setFotos([]));
+    }
+    cargar();
+    window.addEventListener("fotos-subidas", cargar);
+    return () => window.removeEventListener("fotos-subidas", cargar);
   }, []);
 
   const filtradas = useMemo(() => {
