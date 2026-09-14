@@ -62,7 +62,7 @@ export default function SubeFotos() {
   }
 
   return (
-    <section id="fotos" className="mx-auto max-w-2xl px-6 py-24 pb-32 text-center">
+    <section id="fotos" className="mx-auto max-w-2xl px-6 py-24 text-center">
       <p className="mb-2 text-xs tracking-[0.35em] uppercase text-accent">Recuerdos</p>
       <h2 className="mb-4 font-serif text-4xl font-medium">Sube tus fotos</h2>
       <p className="mb-10 text-muted">
