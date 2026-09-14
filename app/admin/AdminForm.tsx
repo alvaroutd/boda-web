@@ -171,6 +171,19 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
         </section>
 
         <section>
+          <h2 className="mb-3 text-sm uppercase tracking-wide text-muted">
+            Intro (antes de &quot;El gran día&quot;)
+          </h2>
+          <textarea
+            className="w-full rounded-lg border border-line px-3 py-2"
+            rows={4}
+            placeholder="Por qué nos casamos después de tanto tiempo..."
+            value={content.introTexto}
+            onChange={(e) => field("introTexto", e.target.value)}
+          />
+        </section>
+
+        <section>
           <h2 className="mb-3 text-sm uppercase tracking-wide text-muted">Fecha y hora</h2>
           <label className="mb-1 block text-xs text-muted">Fecha (ISO, para la cuenta atrás)</label>
           <input

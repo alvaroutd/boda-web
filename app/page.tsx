@@ -1,4 +1,5 @@
 import Hero from "./components/Hero";
+import Intro from "./components/Intro";
 import ElDia from "./components/ElDia";
 import Faq from "./components/Faq";
 import SubeFotos from "./components/SubeFotos";
@@ -13,6 +14,7 @@ export default async function Home() {
   return (
     <main>
       <Hero content={content} />
+      <Intro content={content} />
       <ElDia content={content} />
       <Faq content={content} />
       <SubeFotos />

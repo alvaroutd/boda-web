@@ -25,6 +25,7 @@ export type SiteContent = {
   faq: { pregunta: string; respuesta: string }[];
   heroImage: string | null;
   fotosFinca: string[];
+  introTexto: string;
 };
 
 // Directorio persistente fuera del despliegue Git, para que los cambios
@@ -48,6 +49,7 @@ function defaultContent(): SiteContent {
     faq: FAQ,
     heroImage: null,
     fotosFinca: [],
+    introTexto: "",
   };
 }
 
