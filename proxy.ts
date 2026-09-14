@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AUTH_COOKIE, expectedToken } from "./lib/auth";
+import { getPublicOrigin } from "./lib/origin";
 
 const PUBLIC_PATHS = ["/entrar", "/api/entrar"];
 
@@ -21,8 +22,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const url = request.nextUrl.clone();
-  url.pathname = "/entrar";
+  const url = new URL("/entrar", getPublicOrigin(request));
   url.searchParams.set("from", pathname);
   return NextResponse.redirect(url);
 }
