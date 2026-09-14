@@ -22,43 +22,78 @@ export default function Hero({ content }: { content: SiteContent }) {
   }, [content.fechaBodaIso]);
 
   return (
-    <section
-      className="relative flex min-h-screen flex-col items-center justify-center gap-8 px-6 text-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/api/hero-image')" }}
-    >
-      <div className="absolute inset-0 bg-black/55" />
+    <section className="flex flex-col items-center px-6 py-20 bg-[#14151c] text-[#f0f0f6]">
+      <div className="relative w-full max-w-xl overflow-hidden rounded-sm border border-white/20 bg-[#1c1e28]">
+        <span className="absolute top-1/2 -left-[11px] h-[22px] w-[22px] -translate-y-1/2 rounded-full bg-[#14151c]" />
+        <span className="absolute top-1/2 -right-[11px] h-[22px] w-[22px] -translate-y-1/2 rounded-full bg-[#14151c]" />
 
-      <div className="relative flex flex-col items-center gap-8">
-        <p className="text-xs tracking-[0.35em] uppercase text-white/80">Nos casamos</p>
+        <div className="relative px-8 py-14 text-center sm:px-12">
+          <div className="pointer-events-none absolute inset-0 opacity-50" aria-hidden="true">
+            <span className="absolute -top-5 -left-5 h-16 w-16 rounded-full border border-[#7a3564]" />
+            <span className="absolute top-6 right-[8%] h-9 w-9 rounded-full border border-[#7a3564]" />
+            <span className="absolute bottom-[14%] left-[6%] h-4 w-4 rounded-full border border-[#7a3564]" />
+          </div>
 
-        <h1 className="font-serif text-6xl sm:text-8xl font-medium text-white">
-          {content.novio1} <span className="text-white/70">&amp;</span> {content.novio2}
-        </h1>
-
-        <div className="flex items-center gap-3 text-white/80">
-          <span className="h-px w-8 bg-white/40" />
-          <p className="text-sm tracking-wide">
-            {content.fechaTexto} · {content.lugarNombre}
+          <p className="relative mb-6 flex items-center justify-center gap-2.5 font-ticket-mono text-[11px] tracking-[0.18em] text-[#b1418f] uppercase">
+            <span className="h-px w-7 bg-white/25" />
+            Nos casamos
+            <span className="h-px w-7 bg-white/25" />
           </p>
-          <span className="h-px w-8 bg-white/40" />
-        </div>
 
-        {timeLeft && (
-          <div className="mt-6 flex gap-8 text-center">
-            <div>
-              <div className="font-serif text-4xl text-white">{timeLeft.days}</div>
-              <div className="text-[10px] uppercase tracking-[0.2em] text-white/70">días</div>
+          <h1 className="relative mb-1 font-ticket text-6xl leading-[0.92] font-medium sm:text-8xl">
+            {content.novio1}
+            <em className="my-2 block text-[0.4em] font-medium text-[#b1418f] not-italic">&amp;</em>
+            {content.novio2}
+          </h1>
+
+          <p className="relative mt-6 mb-10 text-[15px] text-[#a6a7b6]">
+            {content.fechaTexto} · <span className="font-medium text-[#f0f0f6]">{content.lugarNombre}</span>
+          </p>
+
+          {timeLeft && (
+            <div className="relative flex justify-center gap-6 border-t border-dashed border-white/25 pt-6 sm:gap-10">
+              <div className="text-center">
+                <div className="font-ticket-mono text-3xl font-medium tabular-nums sm:text-4xl">
+                  {timeLeft.days}
+                </div>
+                <div className="mt-0.5 font-ticket-mono text-[10px] tracking-[0.14em] text-[#a6a7b6] uppercase">
+                  días
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="font-ticket-mono text-3xl font-medium tabular-nums sm:text-4xl">
+                  {timeLeft.hours}
+                </div>
+                <div className="mt-0.5 font-ticket-mono text-[10px] tracking-[0.14em] text-[#a6a7b6] uppercase">
+                  horas
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="font-ticket-mono text-3xl font-medium tabular-nums sm:text-4xl">
+                  {timeLeft.minutes}
+                </div>
+                <div className="mt-0.5 font-ticket-mono text-[10px] tracking-[0.14em] text-[#a6a7b6] uppercase">
+                  min
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="font-serif text-4xl text-white">{timeLeft.hours}</div>
-              <div className="text-[10px] uppercase tracking-[0.2em] text-white/70">horas</div>
+          )}
+
+          <div className="relative mt-6 grid grid-cols-2 border-t border-white/15 text-left">
+            <div className="border-r border-dashed border-white/25 px-2 py-4 sm:px-8">
+              <div className="font-ticket-mono text-[10px] tracking-[0.14em] text-[#b1418f] uppercase">
+                Convocatoria
+              </div>
+              <div className="mt-1 font-ticket text-lg">{content.horaConvocatoria}</div>
             </div>
-            <div>
-              <div className="font-serif text-4xl text-white">{timeLeft.minutes}</div>
-              <div className="text-[10px] uppercase tracking-[0.2em] text-white/70">min</div>
+            <div className="px-2 py-4 sm:px-8">
+              <div className="font-ticket-mono text-[10px] tracking-[0.14em] text-[#b1418f] uppercase">
+                Formato
+              </div>
+              <div className="mt-1 font-ticket text-lg">Cóctel</div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );

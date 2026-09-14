@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Cormorant_Garamond } from "next/font/google";
+import { Geist, Geist_Mono, Cormorant_Garamond, Fraunces, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { NOMBRES, FECHA_TEXTO, LUGAR } from "@/lib/content";
 
@@ -19,6 +19,19 @@ const display = Cormorant_Garamond({
   weight: ["400", "500", "600"],
 });
 
+const ticketDisplay = Fraunces({
+  variable: "--font-ticket-display",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: ["400", "500", "600"],
+});
+
+const ticketMono = IBM_Plex_Mono({
+  variable: "--font-ticket-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
 export const metadata: Metadata = {
   title: `${NOMBRES.novio1} & ${NOMBRES.novio2} — ${FECHA_TEXTO}`,
   description: `Nos casamos el ${FECHA_TEXTO} en ${LUGAR.nombre}.`,
@@ -28,7 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} ${display.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${display.variable} ${ticketDisplay.variable} ${ticketMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

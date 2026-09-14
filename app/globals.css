@@ -17,6 +17,8 @@
   --font-sans: var(--font-geist-sans);
   --font-serif: var(--font-display);
   --font-mono: var(--font-geist-mono);
+  --font-ticket: var(--font-ticket-display);
+  --font-ticket-mono: var(--font-ticket-mono);
 }
 
 body {
