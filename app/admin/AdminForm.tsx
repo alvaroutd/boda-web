@@ -44,6 +44,17 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
     field("faq", copia);
   }
 
+  function añadirFaq() {
+    field("faq", [...content.faq, { pregunta: "", respuesta: "" }]);
+  }
+
+  function eliminarFaq(i: number) {
+    field(
+      "faq",
+      content.faq.filter((_, idx) => idx !== i)
+    );
+  }
+
   return (
     <main className="mx-auto max-w-2xl px-6 py-16">
       <h1 className="mb-8 font-serif text-3xl">Administración</h1>
@@ -140,10 +151,43 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
         </section>
 
         <section>
+          <h2 className="mb-3 text-sm uppercase tracking-wide text-muted">
+            Información adicional (debajo de Ceremonia — Banquete — Fiesta)
+          </h2>
+          <textarea
+            className="w-full rounded-lg border border-line px-3 py-2"
+            rows={3}
+            value={content.infoAdicional}
+            onChange={(e) => field("infoAdicional", e.target.value)}
+          />
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-sm uppercase tracking-wide text-muted">
+            Texto debajo del mapa (cómo llegar)
+          </h2>
+          <textarea
+            className="w-full rounded-lg border border-line px-3 py-2"
+            rows={3}
+            value={content.comoLlegarTexto}
+            onChange={(e) => field("comoLlegarTexto", e.target.value)}
+          />
+        </section>
+
+        <section>
           <h2 className="mb-3 text-sm uppercase tracking-wide text-muted">Preguntas frecuentes</h2>
           {content.faq.map((item, i) => (
             <div key={i} className="mb-4 rounded-lg border border-line p-3">
-              <label className="mb-1 block text-xs text-muted">Pregunta</label>
+              <div className="mb-2 flex items-center justify-between">
+                <label className="text-xs text-muted">Pregunta</label>
+                <button
+                  type="button"
+                  onClick={() => eliminarFaq(i)}
+                  className="text-xs text-accent"
+                >
+                  Eliminar
+                </button>
+              </div>
               <input
                 className="mb-2 w-full rounded-lg border border-line px-3 py-2"
                 value={item.pregunta}
@@ -158,6 +202,13 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
               />
             </div>
           ))}
+          <button
+            type="button"
+            onClick={añadirFaq}
+            className="rounded-full border border-accent px-4 py-2 text-sm text-accent"
+          >
+            + Añadir pregunta
+          </button>
         </section>
 
         <button

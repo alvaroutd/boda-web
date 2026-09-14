@@ -25,6 +25,12 @@ export default function ElDia({ content }: { content: SiteContent }) {
         ))}
       </ol>
 
+      {content.infoAdicional && (
+        <p className="mx-auto mt-10 max-w-xl whitespace-pre-line text-center text-foreground">
+          {content.infoAdicional}
+        </p>
+      )}
+
       <div className="mt-16 border-t border-line pt-10">
         <h3 className="mb-3 text-center text-sm tracking-wide uppercase text-muted">
           Cómo llegar
@@ -36,6 +42,11 @@ export default function ElDia({ content }: { content: SiteContent }) {
           loading="lazy"
           src={content.lugarMapaEmbedSrc}
         />
+        {content.comoLlegarTexto && (
+          <p className="mx-auto mt-4 max-w-xl whitespace-pre-line text-center text-muted">
+            {content.comoLlegarTexto}
+          </p>
+        )}
       </div>
     </section>
   );

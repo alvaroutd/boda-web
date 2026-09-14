@@ -20,6 +20,8 @@ export type SiteContent = {
   lugarDireccion: string;
   lugarMapaEmbedSrc: string;
   momentosDelDia: string[];
+  infoAdicional: string;
+  comoLlegarTexto: string;
   faq: { pregunta: string; respuesta: string }[];
   heroImage: string | null;
 };
@@ -40,6 +42,8 @@ function defaultContent(): SiteContent {
     lugarDireccion: LUGAR.direccionCompleta,
     lugarMapaEmbedSrc: LUGAR.mapaEmbedSrc,
     momentosDelDia: MOMENTOS_DEL_DIA,
+    infoAdicional: "",
+    comoLlegarTexto: "",
     faq: FAQ,
     heroImage: null,
   };
