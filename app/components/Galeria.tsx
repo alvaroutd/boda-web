@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Foto = { nombre: string; tipo: "imagen" | "video" };
+type Filtro = "todas" | "imagen" | "video";
 
 const PAGINA = 30;
 
 export default function Galeria() {
   const [fotos, setFotos] = useState<Foto[] | null>(null);
+  const [filtro, setFiltro] = useState<Filtro>("todas");
   const [visibles, setVisibles] = useState(PAGINA);
   const [abierta, setAbierta] = useState<number | null>(null);
 
@@ -18,21 +20,36 @@ export default function Galeria() {
       .catch(() => setFotos([]));
   }, []);
 
+  const filtradas = useMemo(() => {
+    if (!fotos) return [];
+    if (filtro === "todas") return fotos;
+    return fotos.filter((f) => f.tipo === filtro);
+  }, [fotos, filtro]);
+
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (abierta === null || !fotos) return;
+      if (abierta === null) return;
       if (e.key === "Escape") setAbierta(null);
-      if (e.key === "ArrowRight") setAbierta((i) => (i === null ? null : Math.min(i + 1, fotos.length - 1)));
+      if (e.key === "ArrowRight")
+        setAbierta((i) => (i === null ? null : Math.min(i + 1, filtradas.length - 1)));
       if (e.key === "ArrowLeft") setAbierta((i) => (i === null ? null : Math.max(i - 1, 0)));
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [abierta, fotos]);
+  }, [abierta, filtradas]);
 
   if (!fotos || fotos.length === 0) return null;
 
-  const mostradas = fotos.slice(0, visibles);
-  const actual = abierta !== null ? fotos[abierta] : null;
+  const numFotos = fotos.filter((f) => f.tipo === "imagen").length;
+  const numVideos = fotos.filter((f) => f.tipo === "video").length;
+  const mostradas = filtradas.slice(0, visibles);
+  const actual = abierta !== null ? filtradas[abierta] : null;
+
+  function cambiarFiltro(f: Filtro) {
+    setFiltro(f);
+    setVisibles(PAGINA);
+    setAbierta(null);
+  }
 
   return (
     <section id="galeria" className="mx-auto max-w-6xl px-6 py-24">
@@ -40,9 +57,37 @@ export default function Galeria() {
         Recuerdos
       </p>
       <h2 className="mb-2 text-center font-serif text-4xl font-medium">Fotos de todos</h2>
-      <p className="mb-10 text-center text-sm text-muted">
+      <p className="mb-6 text-center text-sm text-muted">
         Toca una foto para verla en grande y descargarla.
       </p>
+
+      <div className="mb-8 flex justify-center gap-2">
+        <button
+          type="button"
+          onClick={() => cambiarFiltro("todas")}
+          className={`rounded-full px-4 py-1 text-sm ${filtro === "todas" ? "bg-accent text-white" : "border border-line text-muted"}`}
+        >
+          Todas ({fotos.length})
+        </button>
+        {numFotos > 0 && (
+          <button
+            type="button"
+            onClick={() => cambiarFiltro("imagen")}
+            className={`rounded-full px-4 py-1 text-sm ${filtro === "imagen" ? "bg-accent text-white" : "border border-line text-muted"}`}
+          >
+            Fotos ({numFotos})
+          </button>
+        )}
+        {numVideos > 0 && (
+          <button
+            type="button"
+            onClick={() => cambiarFiltro("video")}
+            className={`rounded-full px-4 py-1 text-sm ${filtro === "video" ? "bg-accent text-white" : "border border-line text-muted"}`}
+          >
+            Vídeos ({numVideos})
+          </button>
+        )}
+      </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {mostradas.map((foto, i) => (
@@ -50,10 +95,22 @@ export default function Galeria() {
             key={foto.nombre}
             type="button"
             onClick={() => setAbierta(i)}
-            className="aspect-square overflow-hidden rounded-lg bg-line"
+            className="relative aspect-square overflow-hidden rounded-lg bg-line"
           >
             {foto.tipo === "video" ? (
-              <video src={`/api/fotos/${foto.nombre}`} className="h-full w-full object-cover" preload="metadata" muted />
+              <>
+                <video
+                  src={`/api/fotos/${foto.nombre}`}
+                  className="h-full w-full object-cover"
+                  preload="metadata"
+                  muted
+                />
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-lg text-white">
+                    ▶
+                  </span>
+                </span>
+              </>
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -67,14 +124,14 @@ export default function Galeria() {
         ))}
       </div>
 
-      {visibles < fotos.length && (
+      {visibles < filtradas.length && (
         <div className="mt-8 text-center">
           <button
             type="button"
             onClick={() => setVisibles((v) => v + PAGINA)}
             className="rounded-full border border-accent px-6 py-2 text-sm text-accent"
           >
-            Cargar más ({fotos.length - visibles} restantes)
+            Cargar más ({filtradas.length - visibles} restantes)
           </button>
         </div>
       )}
@@ -135,7 +192,7 @@ export default function Galeria() {
               ‹
             </button>
           )}
-          {abierta !== null && abierta < fotos.length - 1 && (
+          {abierta !== null && abierta < filtradas.length - 1 && (
             <button
               type="button"
               onClick={(e) => {
