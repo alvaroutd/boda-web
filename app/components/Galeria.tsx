@@ -35,7 +35,7 @@ export default function Galeria() {
   const actual = abierta !== null ? fotos[abierta] : null;
 
   return (
-    <section id="galeria" className="mx-auto max-w-4xl px-6 py-24">
+    <section id="galeria" className="mx-auto max-w-6xl px-6 py-24">
       <p className="mb-2 text-center text-xs tracking-[0.35em] uppercase text-accent">
         Recuerdos
       </p>
@@ -44,7 +44,7 @@ export default function Galeria() {
         Toca una foto para verla en grande y descargarla.
       </p>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {mostradas.map((foto, i) => (
           <button
             key={foto.nombre}
