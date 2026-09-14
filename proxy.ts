@@ -10,7 +10,8 @@ export async function proxy(request: NextRequest) {
   if (
     PUBLIC_PATHS.some((p) => pathname.startsWith(p)) ||
     pathname.startsWith("/_next") ||
-    pathname === "/favicon.ico"
+    pathname === "/favicon.ico" ||
+    pathname === "/icon.svg"
   ) {
     return NextResponse.next();
   }
