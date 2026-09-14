@@ -9,6 +9,9 @@ export const runtime = "nodejs";
 // persistente fuera del directorio de despliegue, para que no se borre en cada deploy.
 const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(process.cwd(), "uploads");
 
+const MAX_IMAGEN_BYTES = 20 * 1024 * 1024; // 20 MB
+const MAX_VIDEO_BYTES = 50 * 1024 * 1024; // 50 MB
+
 export async function POST(request: NextRequest) {
   const cookie = request.cookies.get(AUTH_COOKIE)?.value;
   if (cookie !== (await expectedToken())) {
@@ -20,6 +23,20 @@ export async function POST(request: NextRequest) {
 
   if (!(file instanceof File)) {
     return NextResponse.json({ error: "No se ha recibido ningún archivo" }, { status: 400 });
+  }
+
+  const esVideo = file.type.startsWith("video/");
+  const limite = esVideo ? MAX_VIDEO_BYTES : MAX_IMAGEN_BYTES;
+  if (file.size > limite) {
+    const limiteMB = Math.round(limite / (1024 * 1024));
+    return NextResponse.json(
+      {
+        error: esVideo
+          ? `Ese vídeo pesa demasiado (máximo ${limiteMB} MB). Mándanoslo mejor por WhatsApp.`
+          : `Esa foto pesa demasiado (máximo ${limiteMB} MB).`,
+      },
+      { status: 413 }
+    );
   }
 
   try {

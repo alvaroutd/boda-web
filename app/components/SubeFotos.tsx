@@ -4,13 +4,35 @@ import { useRef, useState } from "react";
 
 type Estado = "idle" | "subiendo" | "ok" | "error";
 
+const MAX_IMAGEN_BYTES = 20 * 1024 * 1024; // 20 MB
+const MAX_VIDEO_BYTES = 50 * 1024 * 1024; // 50 MB
+
 export default function SubeFotos() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [estado, setEstado] = useState<Estado>("idle");
   const [subidas, setSubidas] = useState(0);
   const [total, setTotal] = useState(0);
+  const [mensajeError, setMensajeError] = useState<string | null>(null);
 
   async function subirArchivos(files: FileList) {
+    setMensajeError(null);
+
+    const demasiadoGrandes = Array.from(files).filter((file) => {
+      const esVideo = file.type.startsWith("video/");
+      return file.size > (esVideo ? MAX_VIDEO_BYTES : MAX_IMAGEN_BYTES);
+    });
+
+    if (demasiadoGrandes.length > 0) {
+      setEstado("error");
+      const hayVideo = demasiadoGrandes.some((f) => f.type.startsWith("video/"));
+      setMensajeError(
+        `${demasiadoGrandes.map((f) => f.name).join(", ")}: pesa demasiado (máx. 50 MB vídeos, 20 MB fotos).` +
+          (hayVideo ? " Mándanoslo mejor por WhatsApp." : "")
+      );
+      if (inputRef.current) inputRef.current.value = "";
+      return;
+    }
+
     setEstado("subiendo");
     setTotal(files.length);
     setSubidas(0);
@@ -23,7 +45,11 @@ export default function SubeFotos() {
 
       try {
         const res = await fetch("/api/subir-foto", { method: "POST", body: formData });
-        if (!res.ok) huboError = true;
+        if (!res.ok) {
+          huboError = true;
+          const data = await res.json().catch(() => null);
+          if (data?.error) setMensajeError(data.error);
+        }
       } catch {
         huboError = true;
       }
@@ -68,7 +94,7 @@ export default function SubeFotos() {
       )}
       {estado === "error" && (
         <p className="mt-4 text-red-700">
-          Algo ha fallado subiendo alguna foto. Inténtalo de nuevo.
+          {mensajeError || "Algo ha fallado subiendo alguna foto. Inténtalo de nuevo."}
         </p>
       )}
     </section>
