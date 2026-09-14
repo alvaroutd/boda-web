@@ -2,6 +2,7 @@ import Hero from "./components/Hero";
 import ElDia from "./components/ElDia";
 import Faq from "./components/Faq";
 import SubeFotos from "./components/SubeFotos";
+import Galeria from "./components/Galeria";
 import { getContent } from "@/lib/content-store";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +16,7 @@ export default async function Home() {
       <ElDia content={content} />
       <Faq content={content} />
       <SubeFotos />
+      <Galeria />
     </main>
   );
 }
