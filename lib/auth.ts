@@ -1,4 +1,5 @@
 export const AUTH_COOKIE = "boda_auth";
+export const ADMIN_AUTH_COOKIE = "boda_admin_auth";
 
 async function sha256(text: string) {
   const data = new TextEncoder().encode(text);
@@ -16,4 +17,14 @@ export async function expectedToken() {
 
 export async function isValidPassword(candidate: string) {
   return candidate === (process.env.WEDDING_PASSWORD ?? "");
+}
+
+export async function adminExpectedToken() {
+  const password = process.env.ADMIN_PASSWORD ?? "";
+  const secret = process.env.AUTH_SECRET ?? "";
+  return sha256(`admin:${password}:${secret}`);
+}
+
+export async function isValidAdminPassword(candidate: string) {
+  return candidate === (process.env.ADMIN_PASSWORD ?? "");
 }

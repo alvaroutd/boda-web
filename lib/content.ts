@@ -21,7 +21,7 @@ export const FECHA_TEXTO = "7 de diciembre de 2026";
 
 export const HORA_CONVOCATORIA = "13:00";
 
-export const MOMENTOS_DEL_DIA = ["Ceremonia simbólica", "Banquete", "Fiesta"];
+export const MOMENTOS_DEL_DIA = ["Ceremonia", "Banquete", "Fiesta"];
 
 export const FAQ: { pregunta: string; respuesta: string }[] = [
   {
@@ -30,7 +30,6 @@ export const FAQ: { pregunta: string; respuesta: string }[] = [
   },
   {
     pregunta: "¿Hay aparcamiento?",
-    respuesta:
-      "Sí, hay aparcamiento en la finca. Aún estamos decidiendo si organizamos un autobús — si hay novedades, os avisamos.",
+    respuesta: "Sí, hay aparcamiento en la finca.",
   },
 ];

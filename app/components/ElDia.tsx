@@ -1,24 +1,24 @@
-import { FECHA_TEXTO, LUGAR, HORA_CONVOCATORIA, MOMENTOS_DEL_DIA } from "@/lib/content";
+import { SiteContent } from "@/lib/content-store";
 
-export default function ElDia() {
+export default function ElDia({ content }: { content: SiteContent }) {
   return (
     <section id="el-dia" className="mx-auto max-w-3xl px-6 py-24">
       <p className="mb-2 text-center text-xs tracking-[0.35em] uppercase text-accent">
         El gran día
       </p>
-      <h2 className="mb-2 text-center font-serif text-4xl font-medium">{FECHA_TEXTO}</h2>
-      <p className="mb-12 text-center text-muted">{LUGAR.nombre}</p>
+      <h2 className="mb-2 text-center font-serif text-4xl font-medium">{content.fechaTexto}</h2>
+      <p className="mb-12 text-center text-muted">{content.lugarNombre}</p>
 
       <p className="mb-8 text-center text-lg text-foreground">
         Os esperamos a las{" "}
-        <span className="font-serif text-2xl text-accent">{HORA_CONVOCATORIA}</span>
+        <span className="font-serif text-2xl text-accent">{content.horaConvocatoria}</span>
       </p>
 
       <ol className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
-        {MOMENTOS_DEL_DIA.map((momento, i) => (
+        {content.momentosDelDia.map((momento, i) => (
           <li key={momento} className="flex items-center gap-4">
             <span className="font-serif text-xl">{momento}</span>
-            {i < MOMENTOS_DEL_DIA.length - 1 && (
+            {i < content.momentosDelDia.length - 1 && (
               <span className="hidden text-line sm:inline">&mdash;</span>
             )}
           </li>
@@ -29,12 +29,12 @@ export default function ElDia() {
         <h3 className="mb-3 text-center text-sm tracking-wide uppercase text-muted">
           Cómo llegar
         </h3>
-        <p className="mb-4 text-center text-foreground">{LUGAR.direccionCompleta}</p>
+        <p className="mb-4 text-center text-foreground">{content.lugarDireccion}</p>
         <iframe
-          title={`Mapa a ${LUGAR.nombre}`}
+          title={`Mapa a ${content.lugarNombre}`}
           className="h-64 w-full rounded-lg border border-line grayscale-[15%]"
           loading="lazy"
-          src={LUGAR.mapaEmbedSrc}
+          src={content.lugarMapaEmbedSrc}
         />
       </div>
     </section>
