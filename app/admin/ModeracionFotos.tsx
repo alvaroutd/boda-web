@@ -2,10 +2,18 @@
 
 import { useEffect, useState } from "react";
 
-type Foto = { nombre: string; tipo: "imagen" | "video" };
+type Foto = { nombre: string; tipo: "imagen" | "video"; bytes: number };
+
+function formatearBytes(bytes: number) {
+  const gb = bytes / (1024 * 1024 * 1024);
+  if (gb >= 1) return `${gb.toFixed(2)} GB`;
+  const mb = bytes / (1024 * 1024);
+  return `${mb.toFixed(0)} MB`;
+}
 
 export default function ModeracionFotos() {
   const [fotos, setFotos] = useState<Foto[] | null>(null);
+  const [totalBytes, setTotalBytes] = useState(0);
   const [seleccionadas, setSeleccionadas] = useState<Set<string>>(new Set());
   const [status, setStatus] = useState<string | null>(null);
 
@@ -14,6 +22,7 @@ export default function ModeracionFotos() {
     if (res.ok) {
       const data = await res.json();
       setFotos(data.fotos);
+      setTotalBytes(data.totalBytes ?? 0);
     }
   }
 
@@ -81,7 +90,7 @@ export default function ModeracionFotos() {
   return (
     <section className="mb-10">
       <h2 className="mb-3 text-sm uppercase tracking-wide text-muted">
-        Fotos y vídeos de invitados ({fotos.length})
+        Fotos y vídeos de invitados ({fotos.length}) — {formatearBytes(totalBytes)} en disco
       </h2>
 
       {fotos.length === 0 ? (
