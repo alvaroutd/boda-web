@@ -1,4 +1,5 @@
 import { SiteContent } from "@/lib/content-store";
+import RichText from "./RichText";
 
 export default function Faq({ content }: { content: SiteContent }) {
   return (
@@ -13,7 +14,9 @@ export default function Faq({ content }: { content: SiteContent }) {
         {content.faq.map((item) => (
           <div key={item.pregunta} className="py-5">
             <div className="font-serif text-xl">{item.pregunta}</div>
-            <div className="mt-1 text-muted">{item.respuesta}</div>
+            <div className="mt-1 whitespace-pre-line text-muted">
+              <RichText texto={item.respuesta} />
+            </div>
           </div>
         ))}
       </div>

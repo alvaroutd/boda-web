@@ -1,4 +1,5 @@
 import { SiteContent } from "@/lib/content-store";
+import RichText from "./RichText";
 
 export default function ElDia({ content }: { content: SiteContent }) {
   return (
@@ -27,7 +28,7 @@ export default function ElDia({ content }: { content: SiteContent }) {
 
       {content.infoAdicional && (
         <p className="mx-auto mt-10 max-w-xl whitespace-pre-line text-center text-foreground">
-          {content.infoAdicional}
+          <RichText texto={content.infoAdicional} />
         </p>
       )}
 
@@ -58,7 +59,7 @@ export default function ElDia({ content }: { content: SiteContent }) {
         />
         {content.comoLlegarTexto && (
           <p className="mx-auto mt-4 max-w-xl whitespace-pre-line text-center text-muted">
-            {content.comoLlegarTexto}
+            <RichText texto={content.comoLlegarTexto} />
           </p>
         )}
       </div>
