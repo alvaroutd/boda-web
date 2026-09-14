@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { SiteContent } from "@/lib/content-store";
-import DiscoBall from "./DiscoBall";
 
 function getTimeLeft(fechaBodaIso: string) {
   const diff = new Date(fechaBodaIso).getTime() - Date.now();
@@ -30,11 +29,7 @@ export default function Hero({ content }: { content: SiteContent }) {
       <div className="absolute inset-0 bg-black/55" />
 
       <div className="relative flex flex-col items-center gap-8">
-        <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase text-white/80">
-          <DiscoBall className="h-4 w-4 text-white/80" />
-          Nos casamos
-          <DiscoBall className="h-4 w-4 text-white/80" />
-        </p>
+        <p className="text-xs tracking-[0.35em] uppercase text-white/80">Nos casamos</p>
 
         <h1 className="font-serif text-6xl sm:text-8xl font-medium text-white">
           {content.novio1} <span className="text-white/70">&amp;</span> {content.novio2}
