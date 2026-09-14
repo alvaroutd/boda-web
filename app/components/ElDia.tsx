@@ -31,6 +31,20 @@ export default function ElDia({ content }: { content: SiteContent }) {
         </p>
       )}
 
+      {content.fotosFinca.length > 0 && (
+        <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {content.fotosFinca.map((foto) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={foto}
+              src={`/api/fotos-finca/${foto}`}
+              alt={content.lugarNombre}
+              className="h-64 w-full rounded-lg object-cover"
+            />
+          ))}
+        </div>
+      )}
+
       <div className="mt-16 border-t border-line pt-10">
         <h3 className="mb-3 text-center text-sm tracking-wide uppercase text-muted">
           Cómo llegar

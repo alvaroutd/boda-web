@@ -24,6 +24,7 @@ export type SiteContent = {
   comoLlegarTexto: string;
   faq: { pregunta: string; respuesta: string }[];
   heroImage: string | null;
+  fotosFinca: string[];
 };
 
 // Directorio persistente fuera del despliegue Git, para que los cambios
@@ -46,6 +47,7 @@ function defaultContent(): SiteContent {
     comoLlegarTexto: "",
     faq: FAQ,
     heroImage: null,
+    fotosFinca: [],
   };
 }
 

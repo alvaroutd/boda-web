@@ -7,6 +7,7 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
   const [content, setContent] = useState<SiteContent>(initialContent);
   const [status, setStatus] = useState<string | null>(null);
   const [heroFile, setHeroFile] = useState<File | null>(null);
+  const [fincaFile, setFincaFile] = useState<File | null>(null);
 
   function field<K extends keyof SiteContent>(key: K, value: SiteContent[K]) {
     setContent((c) => ({ ...c, [key]: value }));
@@ -31,6 +32,40 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
     const res = await fetch("/api/admin/hero-image", { method: "POST", body: formData });
     setStatus(res.ok ? "Foto de cabecera actualizada." : "Error al subir la foto.");
     setHeroFile(null);
+  }
+
+  async function subirFotoFinca() {
+    if (!fincaFile) return;
+    setStatus("Subiendo foto...");
+    const formData = new FormData();
+    formData.append("file", fincaFile);
+    const res = await fetch("/api/admin/fotos-finca", { method: "POST", body: formData });
+    if (res.ok) {
+      const data = await res.json();
+      field("fotosFinca", [...content.fotosFinca, data.fileName]);
+      setStatus("Foto de la finca añadida.");
+    } else {
+      setStatus("Error al subir la foto.");
+    }
+    setFincaFile(null);
+  }
+
+  async function eliminarFotoFinca(nombre: string) {
+    setStatus("Eliminando...");
+    const res = await fetch("/api/admin/fotos-finca", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre }),
+    });
+    if (res.ok) {
+      field(
+        "fotosFinca",
+        content.fotosFinca.filter((n) => n !== nombre)
+      );
+      setStatus("Foto eliminada.");
+    } else {
+      setStatus("Error al eliminar la foto.");
+    }
   }
 
   function actualizarMomento(i: number, valor: string) {
@@ -74,6 +109,47 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
           className="rounded-full bg-accent px-5 py-2 text-sm text-white disabled:opacity-40"
         >
           Subir foto
+        </button>
+      </section>
+
+      <section className="mb-10">
+        <h2 className="mb-3 text-sm uppercase tracking-wide text-muted">
+          Fotos de la finca (debajo de la info del día)
+        </h2>
+        {content.fotosFinca.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-3">
+            {content.fotosFinca.map((foto) => (
+              <div key={foto} className="relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/api/fotos-finca/${foto}`}
+                  alt=""
+                  className="h-20 w-20 rounded-lg object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => eliminarFotoFinca(foto)}
+                  className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-accent text-xs text-white"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFincaFile(e.target.files?.[0] ?? null)}
+          className="mb-3 block"
+        />
+        <button
+          type="button"
+          onClick={subirFotoFinca}
+          disabled={!fincaFile}
+          className="rounded-full bg-accent px-5 py-2 text-sm text-white disabled:opacity-40"
+        >
+          Añadir foto de la finca
         </button>
       </section>
 
