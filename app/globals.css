@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #14151c;
-  --foreground: #f0f0f6;
-  --accent: #b1418f;
-  --muted: #a6a7b6;
-  --line: #2c2e3a;
+  --background: #faf6f0;
+  --foreground: #2b2320;
+  --accent: #7a3b34;
+  --muted: #8a7f74;
+  --line: #e4dbcd;
 }
 
 @theme inline {
@@ -17,8 +17,6 @@
   --font-sans: var(--font-geist-sans);
   --font-serif: var(--font-display);
   --font-mono: var(--font-geist-mono);
-  --font-ticket: var(--font-ticket-display);
-  --font-ticket-mono: var(--font-ticket-mono);
 }
 
 body {

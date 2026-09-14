@@ -26,13 +26,13 @@ export default function Hero({ content }: { content: SiteContent }) {
       className="relative flex min-h-screen flex-col items-center justify-center gap-8 px-6 text-center bg-cover bg-center"
       style={{ backgroundImage: "url('/api/hero-image')" }}
     >
-      <div className="absolute inset-0 bg-background/70" />
+      <div className="absolute inset-0 bg-black/55" />
 
       <div className="relative flex flex-col items-center gap-8">
         <p className="text-xs tracking-[0.35em] uppercase text-white/80">Nos casamos</p>
 
         <h1 className="font-serif text-6xl sm:text-8xl font-medium text-white">
-          {content.novio1} <span className="text-accent">&amp;</span> {content.novio2}
+          {content.novio1} <span className="text-white/70">&amp;</span> {content.novio2}
         </h1>
 
         <div className="flex items-center gap-3 text-white/80">
@@ -46,15 +46,15 @@ export default function Hero({ content }: { content: SiteContent }) {
         {timeLeft && (
           <div className="mt-6 flex gap-8 text-center">
             <div>
-              <div className="font-serif text-4xl text-accent">{timeLeft.days}</div>
+              <div className="font-serif text-4xl text-white">{timeLeft.days}</div>
               <div className="text-[10px] uppercase tracking-[0.2em] text-white/70">días</div>
             </div>
             <div>
-              <div className="font-serif text-4xl text-accent">{timeLeft.hours}</div>
+              <div className="font-serif text-4xl text-white">{timeLeft.hours}</div>
               <div className="text-[10px] uppercase tracking-[0.2em] text-white/70">horas</div>
             </div>
             <div>
-              <div className="font-serif text-4xl text-accent">{timeLeft.minutes}</div>
+              <div className="font-serif text-4xl text-white">{timeLeft.minutes}</div>
               <div className="text-[10px] uppercase tracking-[0.2em] text-white/70">min</div>
             </div>
           </div>
