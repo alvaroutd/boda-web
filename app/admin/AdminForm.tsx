@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SiteContent } from "@/lib/content-store";
+import ModeracionFotos from "./ModeracionFotos";
 
 export default function AdminForm({ initialContent }: { initialContent: SiteContent }) {
   const [content, setContent] = useState<SiteContent>(initialContent);
@@ -152,6 +153,8 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
           Añadir foto de la finca
         </button>
       </section>
+
+      <ModeracionFotos />
 
       <form onSubmit={guardarTexto} className="flex flex-col gap-6">
         <section>

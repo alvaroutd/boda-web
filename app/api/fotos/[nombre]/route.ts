@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { AUTH_COOKIE, expectedToken } from "@/lib/auth";
+import { AUTH_COOKIE, expectedToken, ADMIN_AUTH_COOKIE, adminExpectedToken } from "@/lib/auth";
 
 export const runtime = "nodejs";
 
@@ -25,7 +25,10 @@ export async function GET(
   { params }: { params: Promise<{ nombre: string }> }
 ) {
   const cookie = request.cookies.get(AUTH_COOKIE)?.value;
-  if (cookie !== (await expectedToken())) {
+  const adminCookie = request.cookies.get(ADMIN_AUTH_COOKIE)?.value;
+  const esInvitado = cookie === (await expectedToken());
+  const esAdmin = adminCookie === (await adminExpectedToken());
+  if (!esInvitado && !esAdmin) {
     return NextResponse.json({ error: "No autorizado" }, { status: 401 });
   }
 
