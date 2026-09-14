@@ -90,7 +90,7 @@ export default function SubeFotos({ content }: { content: SiteContent }) {
             type="button"
             onClick={() => inputRef.current?.click()}
             disabled={estado === "subiendo"}
-            className="rounded-full bg-accent px-10 py-3 text-sm tracking-wide text-background uppercase transition hover:opacity-90 disabled:opacity-50"
+            className="rounded-full bg-accent px-10 py-3 text-sm tracking-wide text-white uppercase transition hover:opacity-90 disabled:opacity-50"
           >
             {estado === "subiendo" ? `Subiendo ${subidas}/${total}...` : "Elegir fotos o vídeos"}
           </button>
