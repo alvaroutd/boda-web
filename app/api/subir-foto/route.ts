@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { AUTH_COOKIE, expectedToken } from "@/lib/auth";
+import { getContent } from "@/lib/content-store";
 
 export const runtime = "nodejs";
 
@@ -16,6 +17,14 @@ export async function POST(request: NextRequest) {
   const cookie = request.cookies.get(AUTH_COOKIE)?.value;
   if (cookie !== (await expectedToken())) {
     return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  }
+
+  const content = await getContent();
+  if (Date.now() < new Date(content.fechaBodaIso).getTime()) {
+    return NextResponse.json(
+      { error: "La subida de fotos se abre el día de la boda." },
+      { status: 403 }
+    );
   }
 
   const formData = await request.formData();
