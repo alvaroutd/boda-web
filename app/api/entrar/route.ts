@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 120, // 120 días, hasta pasada la boda
+    maxAge: 60 * 60 * 24, // 1 día, luego hay que volver a entrar la contraseña
     path: "/",
   });
   return response;
