@@ -23,7 +23,7 @@ export type SiteContent = {
   infoAdicional: string;
   comoLlegarTexto: string;
   faq: { pregunta: string; respuesta: string }[];
-  heroImage: string | null;
+  heroImages: string[];
   fotosFinca: string[];
   introTexto: string;
 };
@@ -47,7 +47,7 @@ function defaultContent(): SiteContent {
     infoAdicional: "",
     comoLlegarTexto: "",
     faq: FAQ,
-    heroImage: null,
+    heroImages: [],
     fotosFinca: [],
     introTexto: "",
   };
@@ -56,7 +56,13 @@ function defaultContent(): SiteContent {
 export async function getContent(): Promise<SiteContent> {
   try {
     const raw = await readFile(CONTENT_FILE, "utf-8");
-    return { ...defaultContent(), ...JSON.parse(raw) };
+    const stored = JSON.parse(raw) as Record<string, unknown>;
+    const content = { ...defaultContent(), ...stored };
+    // Migración: la web usaba antes una sola foto de cabecera (heroImage).
+    if (content.heroImages.length === 0 && typeof stored.heroImage === "string") {
+      content.heroImages = [stored.heroImage];
+    }
+    return content;
   } catch {
     return defaultContent();
   }

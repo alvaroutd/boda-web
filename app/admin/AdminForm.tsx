@@ -32,8 +32,32 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
     const formData = new FormData();
     formData.append("file", heroFile);
     const res = await fetch("/api/admin/hero-image", { method: "POST", body: formData });
-    setStatus(res.ok ? "Foto de cabecera actualizada." : "Error al subir la foto.");
+    if (res.ok) {
+      const data = await res.json();
+      field("heroImages", [...content.heroImages, data.fileName]);
+      setStatus("Foto de cabecera añadida.");
+    } else {
+      setStatus("Error al subir la foto.");
+    }
     setHeroFile(null);
+  }
+
+  async function eliminarFoto(nombre: string) {
+    setStatus("Eliminando...");
+    const res = await fetch("/api/admin/hero-image", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre }),
+    });
+    if (res.ok) {
+      field(
+        "heroImages",
+        content.heroImages.filter((n) => n !== nombre)
+      );
+      setStatus("Foto eliminada.");
+    } else {
+      setStatus("Error al eliminar la foto.");
+    }
   }
 
   async function subirFotoFinca() {
@@ -97,7 +121,30 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
       <h1 className="mb-8 font-serif text-3xl">Administración</h1>
 
       <section className="mb-10">
-        <h2 className="mb-3 text-sm uppercase tracking-wide text-muted">Foto de cabecera</h2>
+        <h2 className="mb-3 text-sm uppercase tracking-wide text-muted">
+          Fotos de cabecera (se muestra una al azar en cada visita)
+        </h2>
+        {content.heroImages.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-3">
+            {content.heroImages.map((foto) => (
+              <div key={foto} className="relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/api/admin/hero-image/${foto}`}
+                  alt=""
+                  className="h-20 w-20 rounded-lg object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => eliminarFoto(foto)}
+                  className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-accent text-xs text-white"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
         <input
           type="file"
           accept="image/*"
@@ -110,7 +157,7 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
           disabled={!heroFile}
           className="rounded-full bg-accent px-5 py-2 text-sm text-white disabled:opacity-40"
         >
-          Subir foto
+          Añadir foto
         </button>
       </section>
 
