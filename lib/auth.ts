@@ -16,7 +16,7 @@ export async function expectedToken() {
 }
 
 export async function isValidPassword(candidate: string) {
-  return candidate === (process.env.WEDDING_PASSWORD ?? "");
+  return candidate.toLowerCase() === (process.env.WEDDING_PASSWORD ?? "").toLowerCase();
 }
 
 export async function adminExpectedToken() {
