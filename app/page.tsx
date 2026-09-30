@@ -17,7 +17,7 @@ export default async function Home() {
       <Intro content={content} />
       <ElDia content={content} />
       <Faq content={content} />
-      <SubeFotos content={content} />
+      <SubeFotos />
       <Galeria />
     </main>
   );
