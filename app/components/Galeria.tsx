@@ -58,7 +58,7 @@ export default function Galeria() {
   }
 
   return (
-    <section id="galeria" className="mx-auto max-w-6xl px-6 py-24">
+    <section id="galeria" className="mx-auto max-w-6xl px-6 py-16">
       <p className="mb-2 text-center text-xs tracking-[0.35em] uppercase text-accent">
         Recuerdos
       </p>

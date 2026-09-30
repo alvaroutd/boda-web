@@ -3,7 +3,7 @@ import RichText from "./RichText";
 
 export default function Faq({ content }: { content: SiteContent }) {
   return (
-    <section id="faq" className="mx-auto max-w-2xl px-6 py-24">
+    <section id="faq" className="mx-auto max-w-2xl px-6 py-16">
       <p className="mb-2 text-center text-xs tracking-[0.35em] uppercase text-accent">
         Dudas
       </p>
