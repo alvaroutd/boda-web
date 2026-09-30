@@ -1,6 +1,7 @@
 import Hero from "./components/Hero";
 import Intro from "./components/Intro";
 import ElDia from "./components/ElDia";
+import Rsvp from "./components/Rsvp";
 import Faq from "./components/Faq";
 import SubeFotos from "./components/SubeFotos";
 import Galeria from "./components/Galeria";
@@ -16,6 +17,7 @@ export default async function Home() {
       <Hero content={content} />
       <Intro content={content} />
       <ElDia content={content} />
+      <Rsvp />
       <Faq content={content} />
       <SubeFotos />
       <Galeria />
