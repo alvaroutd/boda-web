@@ -12,6 +12,7 @@ export default function Galeria() {
   const [filtro, setFiltro] = useState<Filtro>("todas");
   const [visibles, setVisibles] = useState(PAGINA);
   const [abierta, setAbierta] = useState<number | null>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   useEffect(() => {
     function cargar() {
@@ -145,6 +146,15 @@ export default function Galeria() {
         <div
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 p-4"
           onClick={() => setAbierta(null)}
+          onTouchStart={(e) => setTouchStartX(e.changedTouches[0].clientX)}
+          onTouchEnd={(e) => {
+            if (touchStartX === null) return;
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            setTouchStartX(null);
+            if (Math.abs(dx) < 50) return;
+            if (dx < 0) setAbierta((i) => (i === null ? null : Math.min(i + 1, filtradas.length - 1)));
+            else setAbierta((i) => (i === null ? null : Math.max(i - 1, 0)));
+          }}
         >
           <div
             className="relative flex max-h-full max-w-full flex-col items-center"
