@@ -130,7 +130,7 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
               <div key={foto} className="relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`/api/admin/hero-image/${foto}`}
+                  src={`/api/admin/hero-image/${foto}?w=160`}
                   alt=""
                   className="h-20 w-20 rounded-lg object-cover"
                 />
@@ -171,7 +171,7 @@ export default function AdminForm({ initialContent }: { initialContent: SiteCont
               <div key={foto} className="relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`/api/fotos-finca/${foto}`}
+                  src={`/api/fotos-finca/${foto}?w=160`}
                   alt=""
                   className="h-20 w-20 rounded-lg object-cover"
                 />

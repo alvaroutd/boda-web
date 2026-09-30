@@ -142,7 +142,7 @@ export default function ModeracionFotos() {
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={`/api/fotos/${foto.nombre}`}
+                    src={`/api/fotos/${foto.nombre}?w=200`}
                     alt=""
                     className="h-full w-full rounded-lg object-cover"
                     loading="lazy"

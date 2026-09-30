@@ -1,24 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { AUTH_COOKIE, expectedToken, ADMIN_AUTH_COOKIE, adminExpectedToken } from "@/lib/auth";
+import { readImageOrThumb, parseWidth } from "@/lib/image-serve";
 
 export const runtime = "nodejs";
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(process.cwd(), "uploads");
-
-const MIME_TYPES: Record<string, string> = {
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".png": "image/png",
-  ".webp": "image/webp",
-  ".gif": "image/gif",
-  ".heic": "image/heic",
-  ".mp4": "video/mp4",
-  ".mov": "video/quicktime",
-  ".webm": "video/webm",
-  ".m4v": "video/x-m4v",
-};
 
 export async function GET(
   request: NextRequest,
@@ -34,13 +21,13 @@ export async function GET(
 
   const { nombre } = await params;
   const safeName = path.basename(nombre);
+  const width = parseWidth(request.nextUrl.searchParams);
 
   try {
-    const buffer = await readFile(path.join(UPLOAD_DIR, safeName));
-    const ext = path.extname(safeName).toLowerCase();
+    const { buffer, contentType } = await readImageOrThumb(path.join(UPLOAD_DIR, safeName), width);
     return new NextResponse(new Uint8Array(buffer), {
       headers: {
-        "Content-Type": MIME_TYPES[ext] || "application/octet-stream",
+        "Content-Type": contentType,
         "Cache-Control": "private, max-age=3600",
       },
     });

@@ -38,7 +38,7 @@ export default function ElDia({ content }: { content: SiteContent }) {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={foto}
-              src={`/api/fotos-finca/${foto}`}
+              src={`/api/fotos-finca/${foto}?w=800`}
               alt={content.lugarNombre}
               className="h-64 w-full rounded-lg object-cover"
             />

@@ -1,19 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { AUTH_COOKIE, expectedToken, ADMIN_AUTH_COOKIE, adminExpectedToken } from "@/lib/auth";
 import { DATA_DIR } from "@/lib/content-store";
+import { readImageOrThumb, parseWidth } from "@/lib/image-serve";
 
 export const runtime = "nodejs";
 
 const FINCA_DIR = path.join(DATA_DIR, "finca");
-
-const MIME_TYPES: Record<string, string> = {
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".png": "image/png",
-  ".webp": "image/webp",
-};
 
 export async function GET(
   request: NextRequest,
@@ -29,13 +22,13 @@ export async function GET(
 
   const { nombre } = await params;
   const safeName = path.basename(nombre);
+  const width = parseWidth(request.nextUrl.searchParams);
 
   try {
-    const buffer = await readFile(path.join(FINCA_DIR, safeName));
-    const ext = path.extname(safeName).toLowerCase();
+    const { buffer, contentType } = await readImageOrThumb(path.join(FINCA_DIR, safeName), width);
     return new NextResponse(new Uint8Array(buffer), {
       headers: {
-        "Content-Type": MIME_TYPES[ext] || "application/octet-stream",
+        "Content-Type": contentType,
         "Cache-Control": "private, max-age=3600",
       },
     });

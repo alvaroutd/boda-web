@@ -120,7 +120,7 @@ export default function Galeria() {
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={`/api/fotos/${foto.nombre}`}
+                src={`/api/fotos/${foto.nombre}?w=300`}
                 alt=""
                 className="h-full w-full object-cover"
                 loading="lazy"
