@@ -54,7 +54,9 @@ export default function Rsvp() {
     <section id="rsvp" className="mx-auto max-w-md px-6 py-16 text-center">
       <p className="mb-2 text-xs tracking-[0.35em] uppercase text-accent">Confirmación</p>
       <h2 className="mb-4 font-serif text-4xl font-medium">¿Vienes?</h2>
-      <p className="mb-8 text-muted">Confírmanos tu asistencia antes de que sea tarde.</p>
+      <p className="mb-8 text-muted">
+        Confírmanos tu asistencia o ausencia con suficiente antelación, por favor.
+      </p>
 
       <form onSubmit={enviar} className="flex flex-col gap-4 text-left">
         <div>
