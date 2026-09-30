@@ -7,6 +7,7 @@ export type Rsvp = {
   nombre: string;
   asistencia: "si" | "no";
   acompanantes: number;
+  nombresAcompanantes: string;
   alergias: string;
   fecha: string;
 };

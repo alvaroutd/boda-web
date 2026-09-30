@@ -7,6 +7,7 @@ type Rsvp = {
   nombre: string;
   asistencia: "si" | "no";
   acompanantes: number;
+  nombresAcompanantes: string;
   alergias: string;
   fecha: string;
 };
@@ -35,11 +36,12 @@ export default function ListaRsvps() {
   function descargarCsv() {
     if (!rsvps) return;
     const filas = [
-      ["Nombre", "Asistencia", "Acompañantes", "Alergias", "Fecha"],
+      ["Nombre", "Asistencia", "Acompañantes", "Nombres acompañantes", "Alergias", "Fecha"],
       ...rsvps.map((r) => [
         r.nombre,
         r.asistencia === "si" ? "Sí" : "No",
         String(r.acompanantes),
+        r.nombresAcompanantes,
         r.alergias,
         new Date(r.fecha).toLocaleString("es-ES"),
       ]),
@@ -86,6 +88,7 @@ export default function ListaRsvps() {
                 <th className="px-3 py-2">Nombre</th>
                 <th className="px-3 py-2">Viene</th>
                 <th className="px-3 py-2">+</th>
+                <th className="px-3 py-2">Nombres acompañantes</th>
                 <th className="px-3 py-2">Alergias</th>
                 <th className="px-3 py-2"></th>
               </tr>
@@ -96,6 +99,7 @@ export default function ListaRsvps() {
                   <td className="px-3 py-2">{r.nombre}</td>
                   <td className="px-3 py-2">{r.asistencia === "si" ? "Sí" : "No"}</td>
                   <td className="px-3 py-2">{r.acompanantes}</td>
+                  <td className="px-3 py-2 whitespace-pre-line">{r.nombresAcompanantes || "—"}</td>
                   <td className="px-3 py-2">{r.alergias || "—"}</td>
                   <td className="px-3 py-2 text-right">
                     <button

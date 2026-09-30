@@ -7,9 +7,12 @@ type Estado = "idle" | "enviando" | "ok" | "error";
 export default function Rsvp() {
   const [nombre, setNombre] = useState("");
   const [asistencia, setAsistencia] = useState<"si" | "no" | "">("");
-  const [acompanantes, setAcompanantes] = useState(0);
+  const [acompanantes, setAcompanantes] = useState("");
+  const [nombresAcompanantes, setNombresAcompanantes] = useState("");
   const [alergias, setAlergias] = useState("");
   const [estado, setEstado] = useState<Estado>("idle");
+
+  const numAcompanantes = Number(acompanantes) || 0;
 
   async function enviar(e: React.FormEvent) {
     e.preventDefault();
@@ -19,7 +22,13 @@ export default function Rsvp() {
       const res = await fetch("/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, asistencia, acompanantes, alergias }),
+        body: JSON.stringify({
+          nombre,
+          asistencia,
+          acompanantes: numAcompanantes,
+          nombresAcompanantes,
+          alergias,
+        }),
       });
       setEstado(res.ok ? "ok" : "error");
     } catch {
@@ -85,11 +94,35 @@ export default function Rsvp() {
               <input
                 type="number"
                 min={0}
+                inputMode="numeric"
                 className="w-full rounded-lg border border-line px-3 py-2"
                 value={acompanantes}
-                onChange={(e) => setAcompanantes(Math.max(0, Number(e.target.value)))}
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => {
+                  const valor = e.target.value;
+                  if (valor === "" || Number(valor) < 0) {
+                    setAcompanantes("");
+                  } else {
+                    setAcompanantes(String(Math.floor(Number(valor))));
+                  }
+                }}
               />
             </div>
+
+            {numAcompanantes > 0 && (
+              <div>
+                <label className="mb-1 block text-xs text-muted">
+                  Nombre de tus acompañantes
+                </label>
+                <textarea
+                  className="w-full rounded-lg border border-line px-3 py-2"
+                  rows={2}
+                  placeholder="Uno por línea"
+                  value={nombresAcompanantes}
+                  onChange={(e) => setNombresAcompanantes(e.target.value)}
+                />
+              </div>
+            )}
 
             <div>
               <label className="mb-1 block text-xs text-muted">

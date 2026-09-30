@@ -14,12 +14,13 @@ export async function POST(request: NextRequest) {
   const nombre = String(body.nombre ?? "").trim();
   const asistencia = body.asistencia === "si" ? "si" : "no";
   const acompanantes = Math.max(0, Number(body.acompanantes) || 0);
+  const nombresAcompanantes = String(body.nombresAcompanantes ?? "").trim();
   const alergias = String(body.alergias ?? "").trim();
 
   if (!nombre) {
     return NextResponse.json({ error: "Falta el nombre" }, { status: 400 });
   }
 
-  const rsvp = await addRsvp({ nombre, asistencia, acompanantes, alergias });
+  const rsvp = await addRsvp({ nombre, asistencia, acompanantes, nombresAcompanantes, alergias });
   return NextResponse.json({ ok: true, rsvp });
 }
